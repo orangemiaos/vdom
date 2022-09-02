@@ -6,22 +6,25 @@ module.exports = {
   mode: "development",
   entry: "./src/index.js",
   output: {
-    filename: "[name].js",
+    filename: "[name].bundle.js",
     path: path.resolve(__dirname, "dist"),
   },
-  optimization: {
-    runtimeChunk: "single",
-  },
+  // optimization: {
+  //   runtimeChunk: "single",
+  // },
   target: "web",
-  devtool: "inline-source-map",
+  // devtool: "inline-source-map",
   devServer: {
     static: "./dist",
+    hot: true,
   },
   module: {
     rules: [{ test: /\.css$/, use: ["style-loader", "css-loader"] }],
   },
   plugins: [
     new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin({ title: "output html" }),
+    new HtmlWebpackPlugin({
+      template: "index.html",
+    }),
   ],
 };

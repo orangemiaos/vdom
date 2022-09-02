@@ -1,19 +1,53 @@
-import "./index.css";
-import { createElement, render } from "./vDom.js";
+class Element {
+  constructor(type, props, children) {
+    this.type = type;
+    this.props = props;
+    this.children = children;
+  }
+}
 
-// function component() {
-//   var element = document.createElement("div");
-//   element.innerHTML = "hello";
-//   return element;
-// }
-// document.body.appendChild(component());
+function createElement(type, props, children) {
+  return new Element(type, props, children);
+}
 
-const vDom1 = createElement("ul", {
-  class: "list",
-  style: "width: 300px; height: 300px; background-color: orange",
-});
+function setAttrs(node, prop, value) {
+  switch (prop) {
+    case "value":
+      break;
+    default:
+      node.setAttribute(prop, value);
+  }
+}
 
-console.log(vDom1);
-// const rDom = render(vDom1);
+function render(vdom) {
+  let { type, props, children } = vdom;
 
-// console.log(rDom);
+  const el = document.createElement(type);
+  for (let key in props) {
+    console.log("key", key);
+    setAttrs(el, key, props[key]);
+  }
+  return el;
+}
+
+const vDom1 = createElement(
+  "div",
+  {
+    class: "list",
+    style: "width: 300px; height: 300px; background-color: orange",
+  },
+  [
+    
+  ]
+);
+
+console.log("vdom", vDom1);
+
+const rDom = render(vDom1);
+
+console.log("rDom", rDom);
+
+function renderDOM(el, rootEl) {
+  rootEl.appendChild(el);
+}
+renderDOM(rDom, document.getElementById("root"));
